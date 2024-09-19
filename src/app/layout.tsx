@@ -1,15 +1,11 @@
 
-
 import "@/src/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-
-import { Providers } from "./providers";
-
 import { siteConfig } from "../config/site";
 import { fontSans } from "../config/fonts";
-import { Navbar } from "@/src/components/navbar";
+import { Providers } from "../lib/providers";
+
 
 export const metadata: Metadata = {
   title: {
@@ -40,16 +36,14 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <Navbar />
-            <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
+            <main className="container mx-auto max-w-7xl px-6 flex-grow">
               {children}
             </main>
-            
           </div>
         </Providers>
       </body>

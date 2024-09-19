@@ -1,3 +1,4 @@
+"use client"
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,8 +8,7 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
+  
 import { Link } from "@nextui-org/link";
 import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
@@ -17,16 +17,13 @@ import clsx from "clsx";
 
 import { siteConfig } from "../config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-  Logo,
-} from "@/src/components/icons";
+import { GithubIcon, SearchIcon, Logo } from "@/src/components/icons";
+import NavDropdown from "../shared/dropdown/NavDropdown";
+import { useUser } from "../context/user.provider";
 
 export const Navbar = () => {
+  const { user } = useUser();
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -58,7 +55,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -74,19 +71,10 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <ThemeSwitch/>
+        <ThemeSwitch />
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            
-            variant="flat"
-          >
-            Sing Up
-          </Button>
+          {user && <NavDropdown />}
         </NavbarItem>
       </NavbarContent>
 
